@@ -106,3 +106,38 @@ checkscope()        // => "nested scope"
 ```
 
 #### 3.10.1 함수 유효범위와 끌어올림 (hoisting)
+
+자바스크립트에는 블록 유효범위의 개념이 없다. 대신에, 자바스크립트는 함수 유효범위를 사용한다.
+```
+function test(0){
+    var i = 0;                      // i는 함수 전체에 걸쳐 정의된다.
+    if(typeof 0 == "object"){
+        var j =0;
+        for(var k = 0; k < 10; k++){
+            console.log(k);
+        }
+        console.log(k);
+    }
+    console.log(j)                  // j는 정의되어 있고,
+                                    // 초기화되어 있지 않을 것이다.
+}
+```
+함수 유효범위 규칙으로 지역번수는 함수 전체에 걸쳐서 정의된다. 
+> 변수 및 함수 선언은 컴파일 단계에서 메모리에 저장되지만, 코드에서 입력한 위치와 일치하는 곳에 있다.
+```
+var scope = "global"
+function f(){
+    console.log(scope);         // => undefined (hositing으로 지역 scope를 출력)
+    var scope = "local";
+    console.log(scope);         // => local
+}
+
+            즉
+
+var scope = "global"
+function f(){
+    console.log(functionScope);
+    var functionScope = "local";
+    console.log(functionScope);
+}
+```
