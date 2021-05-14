@@ -1,4 +1,4 @@
-# JavaScript Study 03
+# JavaScript Study 04
 ## 4. 표현식과 연산자
 ### 4.4 프로퍼티 접근 표현식
 > 표현식 . 표현식  
