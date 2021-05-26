@@ -104,3 +104,65 @@ var o = {
     get accessor_prop() { /* 함수 몸체 */},
     set accessor_prop(value) { /* 함수 몸체 */}
 };
+```
+
+### 6.7 프로퍼티 속성
+> writable : 프로퍼티 값을 변경 가능 여부  
+> enumerable : 열거될 수 있는지 여부  
+> configurable : configurable 속성, writable 속성, enumerable 속성 값의 변경 가능 여부  
+> * 프로토타입 객체에 메서드를 추가할 수 있고, 추가된 메서드를 내장 메서드처럼 열거할 수 없게 만들수 있음.  
+> * 변경하거나 삭제할 수 없는 프로퍼티를 정의하여, 객체를 고정 시킬수 있음.  
+
+객체가 가진 특정 프로퍼티에 대한 프로퍼티 객체는 ``` Object.getOwnPropertyDescriptor()``` 을 통해 얻음.  
+
+```
+// {value:1 , writable:true, enumerable:true, configurable:true}반환
+Object.getOwnPropertyDesciptor({x:1}, "x");
+```
+프로퍼티의 속성을 설정하거나 임의의 속성으로 새 프로퍼티를 만들기 위해 ```Object.defineProperty()``` 호출  
+```
+var o = {};
+
+Object.defineProperty(o, "x", { value : 1,
+                                wirtable: true
+                                enumerable: false
+                                configurable: true});
+
+o.x;            //=> 1
+Object.keys(o)  //=> []
+```
+여러 개의 프로퍼티를 만들거나 수정하고 싶을 때 ```Object.defineProperties```
+```
+var p = Object.defineProperties({}, {
+    x: { value: 1, writable: true, enumerable: true, configurable: true},
+    y: { value: 1, writable: true, enumerable: true, configurable: true},
+    r: { 
+        get: function() { return Math.sqrt(this.x*this.x + this.y*this.y)},
+        enumerable:true,
+        configurable:true
+    }
+});
+```
+
+> ```Object.create()``` 함수의 첫 인자로는 객체의 프로토타입 객체 ,두 번째는 defineProperties() 인자  
+
+### 6.8 객체 속성
+#### 6.8.1 prototype 속성
+> prototype 속성은 객체가 만들어지는 시점에서 설정된다.  
+> * 객체 리터럴을 통해 만든 객체는 Object.prototype을 프로토타입으로 설정  
+> * Object.create() 메서드로 만든 객체는 첫 인자가 프로토타입 속성의 값  
+>> 하지만 Object.create()로 생성된 객체는 정확한 프로토타입을 참조하지 않음.  
+
+...
+### 6.9 객체 직열화하기
+> JSON 데이터 교환형식
+```
+o = { x:1, y:{z:[false,null,""]}};
+s = JSON.stringify(o);      // s는 '{' 'x':1, 'y':{'z':[false,null,""]}}'문자열이다
+p = JSON.parse(s);          // p는 객체 o를 복사한 객체다.
+```
+
+### 6.10 객체 메서드
+#### 6.10.4 valueOf()
+> 자바스크립트가 객체를 숫자와 같은 다른 원시 타입으로 변환하려 할 때 호출된다.
+
